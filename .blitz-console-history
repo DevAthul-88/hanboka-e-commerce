@@ -1,0 +1,4 @@
+await require('ts-node').create().eval(require('fs').readFileSync('./scripts/create-admin.ts', 'utf-8'))
+await require('./scripts/create-admin.ts')
+await require('./scripts/create-admin.js')
+await require('./scripts/create-admin.ts')
