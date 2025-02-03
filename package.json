@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "blitz dev",
-    "build": "blitz build && NEXT_DISABLE_ESLINT=1",
+    "build": "blitz prisma generate && blitz build",
     "start": "blitz start",
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
