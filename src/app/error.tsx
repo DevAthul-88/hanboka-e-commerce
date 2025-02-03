@@ -10,6 +10,8 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
   return (
     <div>
       <h2>Something went wrong!</h2>
+      <code>WIth blitz prefix: {process.env.TINYMC_KEY}</code>
+      <code>Without blitz prefix: {process.env.SHADOW_DATABASE_URL}</code>
       <button
         onClick={
           // Attempt to recover by trying to re-render the segment
