@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "16.x"
   },
   "scripts": {
-    "postinstall": "npx prisma generate",
+    "postinstall": "npx prisma generate && npm rebuild",
     "dev": "blitz dev",
     "build": "npx prisma generate && blitz build",
     "start": "blitz start",
