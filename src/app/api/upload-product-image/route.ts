@@ -2,6 +2,10 @@ import { NextResponse } from "next/server"
 import uploadImage from "../../admin/products/mutations/uploadImage"
 import { v4 as uuidv4 } from "uuid"
 
+export const runtime = "edge" // 'nodejs' (default) | 'edge'
+export const dynamic = "force-dynamic"
+export const bodyParser = false
+
 export const config = {
   api: {
     bodyParser: false,
