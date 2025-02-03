@@ -2,10 +2,6 @@ import { NextResponse } from "next/server"
 import uploadImage from "../../admin/products/mutations/uploadImage"
 import { v4 as uuidv4 } from "uuid"
 
-// Remove deprecated config and use new App Router configs
-export const runtime = "edge"
-export const dynamic = "force-dynamic"
-
 export async function POST(request: Request) {
   try {
     const formData = await request.formData()
