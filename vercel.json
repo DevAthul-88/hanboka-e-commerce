@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "builds": [
+    {
+      "src": "next.config.js",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "DATABASE_URL": "@database_url",
+    "SHADOW_DATABASE_URL": "@shadow_database_url",
+    "BLITZ_PUBLIC_TINYMC_API_KEY": "@tinymc_api_key",
+    "BLITZ_PUBLIC_TCLOUDINARY_CLOUD_NAME": "@cloudinary_cloud_name",
+    "BLITZ_PUBLIC_TCLOUDINARY_API_KEY": "@cloudinary_api_key",
+    "BLITZ_PUBLIC_TCLOUDINARY_API_SECRET": "@cloudinary_api_secret",
+    "BLITZ_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key",
+    "BLITZ_PUBLIC_STRIPE_SECRET_KEY": "@stripe_secret_key"
+  }
+}
