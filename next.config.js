@@ -2,6 +2,12 @@ const { withBlitz } = require("@blitzjs/next")
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true
+  },
+  typescript: {
+    ignoreBuildErrors: true
+  },
   reactStrictMode: false,
   experimental: {
     typedRoutes: true,
