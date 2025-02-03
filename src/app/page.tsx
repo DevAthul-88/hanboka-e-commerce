@@ -19,6 +19,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
+  console.log(process.env.DATABASE_URL)
+
   return (
     <MainLayout>
       <div className="relative">
