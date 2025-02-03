@@ -4,8 +4,8 @@
   publish = ".next"
 
 [build.environment]
-  # Set Node version
-  NODE_VERSION = "18.x"
+  # Set specific Node version
+  NODE_VERSION = "18.17.1"
   # Enable Blitz server-side rendering
   NEXT_USE_NETLIFY_EDGE = "true"
 
