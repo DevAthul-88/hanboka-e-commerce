@@ -1,6 +1,6 @@
 [build]
-  # Add prisma generate before the build command
-  command = "npx prisma generate && blitz build"
+  # Run clean install and generate Prisma client before build
+  command = "npm ci && npx prisma generate && blitz build"
   functions = "netlify/functions"
   publish = ".next"
 
@@ -9,16 +9,12 @@
   NEXT_USE_NETLIFY_EDGE = "true"
   # Force Prisma to generate fresh client
   PRISMA_GENERATE_DATAPROXY = "true"
+  # Disable Netlify cache for node_modules to ensure fresh installs
+  NETLIFY_USE_YARN_CACHE = "false"
+  NETLIFY_USE_NPM_CACHE = "false"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-# Clear cache if Prisma schema changes
-[[plugins]]
-  package = "netlify-plugin-cache-bust"
-    [plugins.inputs]
-      # Bust cache when prisma schema changes
-      sourceFile = "prisma/schema.prisma"
 
 [[redirects]]
   from = "/*"
