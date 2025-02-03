@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "blitz dev",
-    "build": "blitz prisma generate && blitz build",
+    "build": "blitz build",
     "start": "blitz start",
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
@@ -93,7 +93,6 @@
     "@types/preview-email": "2.0.1",
     "@types/react": "18.0.25",
     "@typescript-eslint/eslint-plugin": "5.42.1",
-    "@typescript-eslint/parser": "8.22.0",
     "@vitejs/plugin-react": "2.2.0",
     "ajv": "^7.0.0",
     "autoprefixer": "10.4.20",

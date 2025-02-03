@@ -2,11 +2,12 @@ import { NextResponse } from "next/server"
 import uploadImage from "../../admin/products/mutations/uploadImage"
 import { v4 as uuidv4 } from "uuid"
 
-// New route segment configuration syntax
-export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
-
-// Remove the deprecated config export
+export const config = {
+  api: {
+    bodyParser: false,
+    maxBodySize: "10mb",
+  },
+}
 
 export async function POST(request: Request) {
   try {

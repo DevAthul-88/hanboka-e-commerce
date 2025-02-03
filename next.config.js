@@ -1,24 +1,19 @@
 const { withBlitz } = require("@blitzjs/next")
 
 /** @type {import('next').NextConfig} */
-const config = {
+const nextConfig = {
+  reactStrictMode: false,
   eslint: {
-    ignoreDuringBuilds: true
+    ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true
+    ignoreBuildErrors: true,
   },
-  reactStrictMode: false,
   experimental: {
     typedRoutes: true,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-      },
-    ],
+    domains: ["res.cloudinary.com"],
   },
   env: {
     TINYMC_KEY: process.env.BLITZ_PUBLIC_TINYMC_API_KEY,
@@ -31,12 +26,6 @@ const config = {
     DATABASE_URL: process.env.DATABASE_URL,
     SHADOW_DATABASE_URL: process.env.SHADOW_DATABASE_URL,
   },
-  // Ensure we're not using any deprecated options
-  webpack: (config, { isServer }) => {
-    // Add any necessary webpack configurations
-    return config
-  },
 }
 
-// Apply Blitz.js configuration wrapper
-module.exports = withBlitz(config)
+module.exports = withBlitz(nextConfig)
