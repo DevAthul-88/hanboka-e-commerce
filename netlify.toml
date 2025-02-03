@@ -1,0 +1,30 @@
+[build]
+  command = "blitz build"
+  functions = "netlify/functions"
+  publish = ".next"
+
+[build.environment]
+  # Set Node version
+  NODE_VERSION = "18.x"
+  # Enable Blitz server-side rendering
+  NEXT_USE_NETLIFY_EDGE = "true"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+  # Handle all Blitz dynamic routes
+  from = "/*"
+  to = "/.netlify/functions/server"
+  status = 200
+
+  # Exclude static files and API routes
+  conditions = {Path = {excluded_patterns = ["/_next/*", "/api/*", "/static/*"]}}
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
