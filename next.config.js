@@ -13,12 +13,7 @@ const nextConfig = {
     typedRoutes: true,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-      },
-    ],
+    domains: ["res.cloudinary.com"],
   },
   env: {
     TINYMC_KEY: process.env.BLITZ_PUBLIC_TINYMC_API_KEY,
