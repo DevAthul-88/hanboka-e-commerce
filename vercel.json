@@ -12,7 +12,10 @@
   "builds": [
     {
       "src": "next.config.js",
-      "use": "@vercel/next"
+      "use": "@vercel/next",
+      "env": {
+        "NPM_FLAGS": "--build-from-source"
+      }
     }
   ],
   "env": {
