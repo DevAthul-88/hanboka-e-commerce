@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "npx prisma generate && npm rebuild",
+    "postinstall": "npx prisma generate",
     "dev": "blitz dev",
     "build": "npx prisma generate && blitz build",
     "start": "blitz start",
