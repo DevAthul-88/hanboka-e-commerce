@@ -11,7 +11,12 @@ const nextConfig = {
   },
   experimental: {
     typedRoutes: true,
+    outputFileTracingRoot: undefined,
+    outputFileTracingIncludes: {
+      "/": ["node_modules/sharp/**/*"],
+    },
   },
+  output: "standalone",
   images: {
     remotePatterns: [
       {
@@ -19,6 +24,15 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
       },
     ],
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals.push({
+        sharp: "commonjs sharp",
+        "secure-password": "commonjs secure-password",
+      })
+    }
+    return config
   },
   env: {
     TINYMC_KEY: process.env.BLITZ_PUBLIC_TINYMC_API_KEY,
