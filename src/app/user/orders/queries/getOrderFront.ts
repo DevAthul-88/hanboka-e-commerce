@@ -17,6 +17,7 @@ export default resolver.pipe(
         userId,
       },
       include: {
+        address: true,
         items: {
           include: {
             product: {
