@@ -66,7 +66,16 @@ function OrderConfirmation() {
     return <OrderNotFound />
   }
 
-  console.log(order)
+  const formatDate = (date: Date | string | undefined) => {
+    return date ? new Date(date).toLocaleDateString() : "N/A"
+  }
+
+  const formatAddress = (address: any) => {
+    if (!address) return "Address Not Available"
+    return `${address.street || ""}, ${address.city || ""}, ${address.state || ""} ${
+      address.zipCode || ""
+    }, ${address.country || ""}`
+  }
 
   return (
     <div className="max-w-3xl mx-auto p-4 space-y-6">
@@ -78,7 +87,7 @@ function OrderConfirmation() {
           <CardTitle className="text-2xl mt-4">Order Confirmed!</CardTitle>
           <CardDescription>
             Thank you for your purchase. Your order number is{" "}
-            <span className="font-medium">{order.orderNumber}</span>
+            <span className="font-medium">{order.orderNumber || "N/A"}</span>
           </CardDescription>
         </CardHeader>
       </Card>
@@ -93,19 +102,19 @@ function OrderConfirmation() {
         <CardContent className="space-y-4">
           <div className="flex justify-between items-center">
             <span className="text-muted-foreground">Order Date</span>
-            <span>{new Date(order.createdAt).toLocaleDateString()}</span>
+            <span>{formatDate(order.createdAt)}</span>
           </div>
           <Separator />
           <div className="flex justify-between items-center">
             <span className="text-muted-foreground">Status</span>
             <Badge variant="outline" className="capitalize">
-              {order.status.toLowerCase()}
+              {order.status?.toLowerCase() || "Unknown"}
             </Badge>
           </div>
           <Separator />
           <div className="flex justify-between items-center">
             <span className="text-muted-foreground">Total Amount</span>
-            <span className="font-medium">${order.totalAmount.toFixed(2)}</span>
+            <span className="font-medium">${(order.totalAmount || 0).toFixed(2)}</span>
           </div>
         </CardContent>
       </Card>
@@ -118,22 +127,28 @@ function OrderConfirmation() {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          {order.items.map((item, index) => (
-            <div key={item.id}>
-              <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <h3 className="font-medium">{item.product.name}</h3>
-                  <div className="text-sm text-muted-foreground">
-                    Quantity: {item.quantity}
-                    {item.size && ` • Size: ${item.size}`}
-                    {item.color && ` • Color: ${item.color}`}
+          {order.items && order.items.length > 0 ? (
+            order.items.map((item, index) => (
+              <div key={item.id || index}>
+                <div className="flex justify-between items-start">
+                  <div className="space-y-1">
+                    <h3 className="font-medium">{item.product?.name || "Unknown Product"}</h3>
+                    <div className="text-sm text-muted-foreground">
+                      Quantity: {item.quantity || 0}
+                      {item.size && ` • Size: ${item.size}`}
+                      {item.color && ` • Color: ${item.color}`}
+                    </div>
                   </div>
+                  <span className="font-medium">
+                    ${((item.price || 0) * (item.quantity || 0)).toFixed(2)}
+                  </span>
                 </div>
-                <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                {index < (order.items?.length || 0) - 1 && <Separator className="my-4" />}
               </div>
-              {index < order.items.length - 1 && <Separator className="my-4" />}
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-muted-foreground text-center">No items in this order</p>
+          )}
         </CardContent>
       </Card>
 
@@ -146,11 +161,7 @@ function OrderConfirmation() {
         </CardHeader>
         <CardContent>
           <address className="not-italic text-muted-foreground">
-            {order.address.street}
-            <br />
-            {order.address.city}, {order.address.state} {order.address.zipCode}
-            <br />
-            {order.address.country}
+            {formatAddress(order.address)}
           </address>
         </CardContent>
       </Card>
