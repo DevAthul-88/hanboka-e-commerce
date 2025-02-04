@@ -1,59 +1,41 @@
-import { paginate } from "blitz"
 import { resolver } from "@blitzjs/rpc"
-import db, { Prisma } from "db"
+import db from "db"
 import { z } from "zod"
 
-const GetOrdersInput = z.object({
-  userId: z.number(), // Make userId required
-  skip: z.number().optional().default(0),
-  take: z.number().optional().default(100),
-  orderBy: z.any().optional(),
+const GetOrderByNumberInput = z.object({
+  orderNumber: z.string(),
+  userId: z.number(),
 })
 
 export default resolver.pipe(
-  resolver.zod(GetOrdersInput),
+  resolver.zod(GetOrderByNumberInput),
   resolver.authorize(),
-  async ({ userId, orderBy, skip, take }) => {
-    const where: Prisma.OrderWhereInput = {
-      userId, // Filter orders by userId
-    }
-
-    const {
-      items: orders,
-      hasMore,
-      nextPage,
-      count,
-    } = await paginate({
-      skip,
-      take,
-      count: () => db.order.count({ where }),
-      query: (paginateArgs) =>
-        db.order.findMany({
-          ...paginateArgs,
-          where,
-          orderBy,
+  async ({ orderNumber, userId }) => {
+    const order = await db.order.findFirst({
+      where: {
+        orderNumber,
+        userId,
+      },
+      include: {
+        items: {
           include: {
-            items: {
+            product: {
               include: {
-                product: {
-                  include: {
-                    images: {
-                      where: { isMain: true }, // Fetch only the main image
-                      take: 1, // Ensure only one image is retrieved
-                    },
-                  },
+                images: {
+                  where: { isMain: true },
+                  take: 1,
                 },
               },
             },
           },
-        }),
+        },
+      },
     })
 
-    return {
-      orders,
-      nextPage,
-      hasMore,
-      count,
+    if (!order) {
+      throw new Error("Order not found")
     }
+
+    return order
   }
 )
