@@ -18,7 +18,7 @@ function OrderConfirmation() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const orderNumber = searchParams.get("orderNumber")
-  const user = useSession()
+  const user1 = useSession()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function OrderConfirmation() {
 
   const [order, { isLoading, error }] = useQuery(
     getOrderFront,
-    { orderNumber, userId: user?.userId },
+    { orderNumber, userId: user1?.userId },
     {
       suspense: false,
       retry: 1,
