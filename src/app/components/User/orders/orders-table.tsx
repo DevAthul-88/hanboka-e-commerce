@@ -132,11 +132,14 @@ export function OrdersTable({ initialOrders, onOrderCancelled, refetch }: Orders
     switch (status) {
       case "CONFIRMED":
         return `${baseClass} bg-blue-100 text-blue-800`
+
       case "COMPLETED":
         return `${baseClass} bg-green-100 text-green-800`
       case "PROCESSING":
         return `${baseClass} bg-yellow-100 text-yellow-800`
       case "SHIPPED":
+        return `${baseClass} bg-purple-100 text-purple-800`
+      case "DELIVERED":
         return `${baseClass} bg-purple-100 text-purple-800`
       case "CANCELLED":
         return `${baseClass} bg-red-100 text-red-800`
@@ -146,7 +149,7 @@ export function OrdersTable({ initialOrders, onOrderCancelled, refetch }: Orders
   }
 
   const isCancelDisabled = (status: string) => {
-    return ["COMPLETED", "SHIPPED", "CANCELLED"].includes(status)
+    return ["COMPLETED", "SHIPPED", "CANCELLED", "DELIVERED"].includes(status)
   }
 
   return (
