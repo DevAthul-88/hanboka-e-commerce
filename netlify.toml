@@ -1,4 +1,4 @@
-// netlify.toml
+# netlify.toml
 [build]
   command = "npm run build"
   publish = ".next"
@@ -23,35 +23,5 @@
   status = 404
 
 [functions]
-  # Increase the timeout for functions that might take longer to build
   node_bundler = "esbuild"
   external_node_modules = ["secure-password"]
-
-// package.json additions
-{
-  "dependencies": {
-    "@netlify/plugin-nextjs": "latest",
-    "secure-password": "4.0.0"
-  },
-  "scripts": {
-    "postinstall": "npm rebuild secure-password --build-from-source",
-    "build": "next build",
-    "dev": "next dev"
-  }
-}
-
-// next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  target: 'serverless',
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals.push({
-        'secure-password': 'commonjs secure-password'
-      })
-    }
-    return config
-  },
-}
-
-module.exports = nextConfig
