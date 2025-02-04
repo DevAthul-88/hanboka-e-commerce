@@ -12,11 +12,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui
 import { Button } from "../ui/button"
 import { Separator } from "../ui/separator"
 import { Badge } from "../ui/badge"
+import { useSession } from "@blitzjs/auth"
 
 function OrderConfirmation() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const orderNumber = searchParams.get("orderNumber")
+  const user = useSession()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -45,7 +47,7 @@ function OrderConfirmation() {
 
   const [order, { isLoading, error }] = useQuery(
     getOrderFront,
-    { orderNumber },
+    { orderNumber, userId: user?.userId },
     {
       suspense: false,
       retry: 1,
